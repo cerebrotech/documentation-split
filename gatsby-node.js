@@ -46,5 +46,11 @@ exports.onCreateNode = async ({ node, actions, getNode, loadNodeContent }) => {
       node,
       value,
     })
+    const filePath = getNode(node.parent).relativePath
+    createNodeField({
+      node,
+      name: 'path',
+      value: filePath,
+    })
   }
 }
