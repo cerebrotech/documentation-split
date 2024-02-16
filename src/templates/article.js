@@ -16,20 +16,10 @@ class Article extends React.Component {
     return (
       <Layout>
         <div dangerouslySetInnerHTML={{ __html: this.props.data.asciidoc.html }} />
-        <footer class="bg-white rounded-lg shadow m-4 dark:bg-gray-800">
-          <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-            {this.props.data.asciidoc.author && (
-              <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-                {this.props.data.asciidoc.author.fullName} ({this.props.data.asciidoc.author.email})
-              </span>
-            )}
-            {this.props.data.asciidoc.revision && (
-              <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-                v{this.props.data.asciidoc.revision.number} ({this.props.data.asciidoc.revision.date})
-              </span>
-            )}
-          </div>
-        </footer>
+        <a
+        href={`https://github.com/cerebrotech/documentation/tree/main/content/`}
+      >Edit this page
+      </a>
       </Layout>
     )
   }
@@ -45,19 +35,6 @@ export const pageQuery = graphql`
         title
         subtitle
         main
-      }
-      revision {
-        date
-        number
-        remark
-      }
-      author {
-        fullName
-        firstName
-        lastName
-        middleName
-        authorInitials
-        email
       }
     }
   }
