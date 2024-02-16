@@ -1,0 +1,22 @@
+= What is AsciiDoc?
+Some Fictional Dude <some-fictional-dude@gmail.com>
+v1.9, September 2023: Rewritten for version 2
+:description: An explanation of AsciiDoc.
+ifdef::asciidoctor[]
+:source-highlighter: coderay
+endif::asciidoctor[]
+
+AsciiDoc is a text document format for writing notes, documentation, articles, books, ebooks, slideshows, web pages, man pages, and blogs. It's designed to be human-readable and plain text, but also has a rich set of features for formatting and structuring your text. Here are some key points about AsciiDoc:
+
+1. **Human-Readable Format**: AsciiDoc is written in a plain text format, making it easy to read and write without requiring any special software.
+2. **Rich Formatting Options**: Despite its simple appearance, AsciiDoc supports a wide range of formatting and structuring options, including headings, tables, lists, and more.
+3. **Extensible**: AsciiDoc is extensible, allowing users to define their own custom attributes, macros, and templates.
+4. **Output Formats**: Using tools like AsciiDoctor, you can convert AsciiDoc content into many different formats including HTML, PDF, ePub, and DocBook.
+5. **Single Source Publishing**: Write once, and publish everywhere. With AsciiDoc, you can write your content once in a plain text file, then generate output in many different formats without having to rewrite or reformat your content.
+6. **Version Control Friendly**: Because it's a text-based format, AsciiDoc works well with version control systems like Git. This makes it easy to track changes over time, collaborate with others, and manage your writing projects.
+7. **Cross-Referencing**: AsciiDoc supports advanced cross-referencing of content, making it easy to create complex documents with internal links, footnotes, and bibliographies.
+8. **Include Mechanism**: You can include content from other AsciiDoc files, making it easy to modularize and manage larger documents or document sets.
+9. **Community and Tooling**: There's a strong community around AsciiDoc, and a range of tools and text editors support it.
+10. **Compatibility**: AsciiDoc is a mature, stable, and well-documented format, which makes it a reliable choice for documentation projects.
+
+AsciiDoc provides a balance between ease of writing (like Markdown) and the ability to create complex, structured documents (like DocBook or LaTeX), making it a popular choice for technical writers, authors, and developers.
