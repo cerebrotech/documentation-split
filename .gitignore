@@ -70,3 +70,4 @@ yarn-error.log
 *.code-workspace
 yarn.lock
 .netlify
+package-lock.json

@@ -2,9 +2,13 @@ const _ = require(`lodash`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
+const fetchVersions = require('./src/util/fetchVersions');
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
+
+  const versions = await fetchVersions(graphql);
+
   return graphql(
     `
       {
@@ -30,6 +34,7 @@ exports.createPages = ({ graphql, actions }) => {
         component: slash(articleTemplate),
         context: {
           id: node.id,
+          versions,
         },
       })
     })
@@ -40,17 +45,34 @@ exports.onCreateNode = async ({ node, actions, getNode, loadNodeContent }) => {
   const { createNodeField } = actions
 
   if (node.internal.type === `Asciidoc`) {
-    const value = createFilePath({ node, getNode })
+
+    const slug = createFilePath({ node, getNode })
+
+    const parts = slug.replace(/^\/|\/$/g, '').split('/');
+
+    const section = parts[0];
+    const version = parts[1];
+
     createNodeField({
       name: `slug`,
       node,
-      value,
+      value: slug,
     })
     const filePath = getNode(node.parent).relativePath
     createNodeField({
       node,
       name: 'path',
       value: filePath,
+    })
+    createNodeField({
+      name: `section`,
+      node,
+      value: section,
+    })
+    createNodeField({
+      name: `version`,
+      node,
+      value: version,
     })
   }
 }

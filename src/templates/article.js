@@ -16,6 +16,14 @@ class Article extends React.Component {
       <Layout>
         <div dangerouslySetInnerHTML={{ __html: this.props.data.asciidoc.html }} />
         <a href={editUrl}>Edit this page</a>
+        <div>
+          <h2>List of Versions</h2>
+          <ul>
+            {this.props.pageContext.versions.map((version, index) => (
+              <li key={index}>{version}</li>
+            ))}
+          </ul>
+        </div>
       </Layout>
     )
   }
