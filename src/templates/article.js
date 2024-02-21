@@ -11,6 +11,8 @@ export const Head = ({ location, data }) => (
 
 class Article extends React.Component {
   render() {
+    const { selectedVersion } = this.props;
+    console.log(this.props);
     const editUrl = `${this.props.data.site.siteMetadata.contentRepositoryUrl}${this.props.data.asciidoc.fields.path}`;
     return (
       <Layout>

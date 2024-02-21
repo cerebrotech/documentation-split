@@ -5,9 +5,12 @@ import Layout from "../layouts"
 
 class IndexPage extends React.Component {
   render() {
+    const { selectedVersion } = this.props;
+
     return (
       <Layout>
         <div>
+          PPP{selectedVersion}QQQ
           <ul>
             {this.props.data.allAsciidoc.nodes.map((node) => (
               <li key={node.id}>
@@ -34,6 +37,7 @@ export const pageQuery = graphql`
         }
         fields {
           slug
+          version
         }
       }
     }

@@ -43,7 +43,7 @@ class DefaultLayout extends React.Component {
           const selectedVersion = this.state.selectedVersion ? this.state.selectedVersion : Math.max(...versions);
           return (
           <div className="prose lg:prose-lg my-0 max-w-full">
-            {selectedVersion}
+            AAA {selectedVersion} BBB
             <div className="p-3 text-center bg-black">
               <h2 id="heading" className="text-white">{data.site.siteMetadata.title}</h2>
             </div>
@@ -58,7 +58,9 @@ class DefaultLayout extends React.Component {
               </div>
               <div className="flex-1" style={{ flex: '0 0 80%' }}>
                 <div className="pt-6 max-w-3xl">
-                  {this.props.children}
+                  {React.Children.map(this.props.children, child => {
+                    return React.cloneElement(child, { selectedVersion: selectedVersion });
+                  })}
                 </div>
               </div>
             </div>
