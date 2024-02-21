@@ -1,16 +1,53 @@
 import React from "react"
+import { StaticQuery, graphql } from "gatsby"
+
+// CAN WE DELETE ../util/fetchVersions???
+// CAN WE DELETE ../util/fetchVersions???
+// CAN WE DELETE ../util/fetchVersions???
+// CAN WE DELETE ../util/fetchVersions???
+// CAN WE DELETE ../util/fetchVersions???
 
 class DefaultLayout extends React.Component {
   render() {
     return (
-      <div className="prose lg:prose-lg my-0 max-w-full">
-        <div className="p-3 text-center bg-black">
-          <h2 id="heading" className="text-white">Domino Split Documentation</h2>
-        </div>
-        <div className="pt-6 mx-auto max-w-3xl">
-        {this.props.children}
-        </div>
-      </div>
+      <StaticQuery
+        query={graphql`
+        query {
+          site {
+            siteMetadata {
+              title
+            }
+          }
+          allAsciidoc {
+            nodes {
+                fields {
+                    version
+                }
+            }
+          }
+        }
+        `}
+        render={data => {
+          const versions = Array.from(new Set(data.allAsciidoc.nodes.map(node => parseFloat(node.fields.version))));
+          return (
+          <div className="prose lg:prose-lg my-0 max-w-full">
+            {JSON.stringify(versions)}
+            <div className="p-3 text-center bg-black">
+              <h2 id="heading" className="text-white">{data.site.siteMetadata.title}</h2>
+            </div>
+            <div className="flex">
+              <div className="flex-1" style={{ flex: '0 0 20%' }}>
+              </div>
+              <div className="flex-1" style={{ flex: '0 0 80%' }}>
+                <div className="pt-6 max-w-3xl">
+                  {this.props.children}
+                </div>
+              </div>
+            </div>
+          </div>
+          );
+        }}
+      />
     )
   }
 }

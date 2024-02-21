@@ -1,9 +1,9 @@
 module.exports = {
   "siteMetadata": {
-    "title": "Domino Data Lab Documentation",
+    "title": "Domino Data Lab Documentation (Split Version)",
     "description": "",
     "author": "",
-    "siteUrl": "",
+    "siteUrl": "https://docs.dominodatalab.com/",
     "contentRepositoryUrl": "https://github.com/cerebrotech/documentation-split-content/edit/main/"
   },
   "plugins": [
@@ -34,7 +34,6 @@ module.exports = {
         ]
       }
     },
-    "gatsby-adapter-netlify",
     "gatsby-plugin-postcss"
   ]
 }
