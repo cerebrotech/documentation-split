@@ -41,6 +41,15 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 }
 
+exports.onCreatePage = ({ page, actions }) => {
+  const { createPage } = actions
+
+  if (page.path.match(/^\/result/)) {
+    page.matchPath = "/result/:option"
+    createPage(page)
+  }
+}
+
 exports.onCreateNode = async ({ node, actions, getNode, loadNodeContent }) => {
   const { createNodeField } = actions
 
