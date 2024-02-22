@@ -242,3 +242,20 @@
   #nav-left {
     @apply px-3 pt-3;
   }
+
+#edit-link {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#edit-link > a,
+#home-link > a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+#edit-link > a > svg,
+#home-link > a > svg {
+  @apply mr-2
+}

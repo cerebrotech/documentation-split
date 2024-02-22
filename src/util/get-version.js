@@ -1,5 +1,5 @@
 const getVersion = (path) => {
-    const match = /^(?:\/[^\/]+\/)([^\/]+)(?:\/.*)$/.exec(path);
+    const match = /^(?:\/[^/]+\/)([^/]+)(?:\/.*)$/.exec(path);
     return match ? match[1] : null;
 }
   

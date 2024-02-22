@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link, graphql, navigate } from "gatsby";
+import React from "react";
+import { Link, graphql } from "gatsby";
 
 import Layout from "../layouts";
 

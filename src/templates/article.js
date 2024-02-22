@@ -1,5 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
+import { FaGithub } from "react-icons/fa";
 
 import Layout from "../layouts"
 
@@ -11,12 +12,14 @@ export const Head = ({ location, data }) => (
 
 class Article extends React.Component {
   render() {
-    const { selectedVersion } = this.props;
-    console.log(this.props);
     const editUrl = `${this.props.data.site.siteMetadata.contentRepositoryUrl}${this.props.data.asciidoc.fields.path}`;
     return (
       <Layout>
-        <a id="edit-link" href={editUrl}>Edit this page</a>
+        <div id="edit-link">
+          <a href={editUrl}>
+            <FaGithub size={24} className="inline" /> Edit this page
+          </a>
+        </div>
         <div dangerouslySetInnerHTML={{ __html: this.props.data.asciidoc.html }} />
       </Layout>
     )
