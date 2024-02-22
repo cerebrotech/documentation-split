@@ -16,8 +16,8 @@ class Article extends React.Component {
     const editUrl = `${this.props.data.site.siteMetadata.contentRepositoryUrl}${this.props.data.asciidoc.fields.path}`;
     return (
       <Layout>
+        <a id="edit-link" href={editUrl}>Edit this page</a>
         <div dangerouslySetInnerHTML={{ __html: this.props.data.asciidoc.html }} />
-        <a href={editUrl}>Edit this page</a>
       </Layout>
     )
   }

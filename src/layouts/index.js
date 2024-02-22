@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { navigate } from "gatsby"
+import { StaticQuery, graphql, navigate } from "gatsby"
 import { useLocation } from "../util/location";
+import setVersion from "../util/set-version";
+import getVersion from "../util/get-version";
 
 // CAN WE DELETE ../util/fetchVersions???
 // CAN WE DELETE ../util/fetchVersions???
@@ -11,12 +13,23 @@ import { useLocation } from "../util/location";
 const DefaultLayout = ({ children }) => {
   const location = useLocation();
 
+  console.log("THE LOCATION");
+  console.log(location.pathname);
+  const version = getVersion(location.pathname);
+  console.log(version);
+
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedVersion, setSelectedVersion] = useState("");
 
   const handleChange = (event) => {
-    setSelectedOption(event.target.value);
-    navigate(`/test/`)
+    console.log(location);
+    console.log(event.target.value);
+    const version = event.target.value;
+    const url = setVersion(location.pathname, version);
+    console.log(url);
+    console.log("FOO");
+    setSelectedOption(version);
+    navigate(url);
   };
 
   const isLandingPage = () => {
@@ -24,30 +37,54 @@ const DefaultLayout = ({ children }) => {
   }
 
   return (
-    <div className="prose lg:prose-lg my-0 max-w-full">
-      <div className="p-3 text-center bg-black">
-        <a href="/"><h2 id="heading" className="text-white">XXX</h2></a>
-      </div>
-      <div className="flex">
-        <div id="nav-left" className="flex-1" style={{ flex: '0 0 20%' }}>
-          {!isLandingPage() && (
-          <div>
-            <label htmlFor="version-selector">Select Version:</label>
-            <select id="version-selector" onChange={handleChange}>
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-            </select>
+    <StaticQuery
+      query={graphql`
+        query {
+          site {
+            siteMetadata {
+              title
+            }
+          }
+          allAsciidoc {
+            nodes {
+              fields {
+                version
+              }
+            }
+          }
+        }
+      `}
+      render={(data) => {
+        const versions = Array.from(new Set(data.allAsciidoc.nodes.map(node => parseFloat(node.fields.version)))).sort((a, b) => b - a);
+        const selectedVersion = version ? version : Math.max(...versions);
+        return (
+          <div className="prose lg:prose-lg my-0 max-w-full">
+            <div className="p-3 text-center bg-black">
+              <a href="/"><h2 id="heading" className="text-white">{data.site.siteMetadata.title}</h2></a>
+            </div>
+            <div className="flex">
+              <div id="nav-left" className="flex-1" style={{ flex: '0 0 20%' }}>
+                {!isLandingPage() && (
+                <div>
+                  <label htmlFor="version-selector">Select Version:</label>
+                  <select id="version-selector" value={selectedVersion} onChange={handleChange}>
+                    {versions.map((version, index) => (
+                      <option key={index} value={version}>{version}</option>
+                    ))}
+                  </select>
+                </div>
+                )}
+              </div>
+              <div className="flex-1" style={{ flex: '0 0 80%' }}>
+                <div className="pt-6 pl-4 pr-2 max-w-3xl">
+                  {children}
+                </div>
+              </div>
+            </div>
           </div>
-          )}
-        </div>
-        <div className="flex-1" style={{ flex: '0 0 80%' }}>
-          <div className="pt-6 pl-4 pr-2 max-w-3xl">
-            {children}
-          </div>
-        </div>
-      </div>
-    </div>
+        );
+      }}
+    />
   );
 };
 
