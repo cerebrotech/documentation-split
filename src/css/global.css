@@ -249,15 +249,25 @@
 }
 
 #edit-link > a,
-#home-link > a {
+.section-link a {
   display: flex;
   align-items: center;
   text-decoration: none;
 }
 
 #edit-link > a > svg,
-#home-link > a > svg {
+.section-link a > svg {
   @apply mr-1
+}
+
+.section-link {
+  margin-left: 0;
+  list-style-type: none;
+  padding-left: 0 !important;
+}
+
+.section-link > li {
+  padding-left: 0 !important;
 }
 
 #edit-link > a {

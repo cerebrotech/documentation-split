@@ -2,7 +2,7 @@ const _ = require(`lodash`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
-const fetchVersions = require('./src/util/fetchVersions');
+const fetchVersions = require('./src/util/get-versions');
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions

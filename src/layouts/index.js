@@ -1,15 +1,9 @@
 import React, { useState } from "react";
 import { StaticQuery, graphql, navigate } from "gatsby"
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaBook, FaCog, FaCode } from "react-icons/fa";
 import { useLocation } from "../util/location";
 import setVersion from "../util/set-version";
 import getVersion from "../util/get-version";
-
-// CAN WE DELETE ../util/fetchVersions???
-// CAN WE DELETE ../util/fetchVersions???
-// CAN WE DELETE ../util/fetchVersions???
-// CAN WE DELETE ../util/fetchVersions???
-// CAN WE DELETE ../util/fetchVersions???
 
 const DefaultLayout = ({ children }) => {
   const location = useLocation();
@@ -56,11 +50,20 @@ const DefaultLayout = ({ children }) => {
             </div>
             <div className="flex">
               <div id="nav-left" className="flex-1" style={{ flex: '0 0 20%' }}>
-                <div id="home-link" className="mb-4">
-                  <a href="/">
-                    <FaHome size={24} className="inline" /> Home
-                  </a>
-                </div>
+              <ul className="section-link mb-4">
+                <li>
+                  <a href="/"><FaHome size={24} className="inline" /> Home</a>
+                </li>
+                <li>
+                  <a href={`/${selectedVersion}/user-guide/`}><FaBook size={24} className="inline" /> User Guide</a>
+                </li>
+                <li>
+                  <a href={`/${selectedVersion}/admin-guide/`}><FaCog size={24} className="inline" /> Admin Guide</a>
+                </li>
+                <li>
+                  <a href={`/${selectedVersion}/api-guide/`}><FaCode size={24} className="inline" /> API Guide</a>
+                </li>
+              </ul>
                 {!isLandingPage() && (
                 <div>
                   <label htmlFor="version-selector">Select Version:</label>
