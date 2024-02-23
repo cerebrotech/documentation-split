@@ -17,7 +17,7 @@ class Article extends React.Component {
       <Layout>
         <div id="edit-link">
           <a href={editUrl}>
-            <FaGithub size={24} className="inline" /> Edit this page
+            <FaGithub size={24} className="inline" /> Edit
           </a>
         </div>
         <div dangerouslySetInnerHTML={{ __html: this.props.data.asciidoc.html }} />

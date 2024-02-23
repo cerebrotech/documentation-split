@@ -257,5 +257,14 @@
 
 #edit-link > a > svg,
 #home-link > a > svg {
-  @apply mr-2
+  @apply mr-1
+}
+
+#edit-link > a {
+  @apply inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded;
+  font-weight: 400;
+}
+
+#edit-link > a > svg {
+  @apply mb-1
 }
