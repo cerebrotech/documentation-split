@@ -59,8 +59,8 @@ exports.onCreateNode = async ({ node, actions, getNode, loadNodeContent }) => {
 
     const parts = slug.replace(/^\/|\/$/g, '').split('/');
 
-    const section = parts[0];
-    const version = parts[1];
+    const section = parts[1];
+    const version = parts[0];
 
     createNodeField({
       name: `slug`,

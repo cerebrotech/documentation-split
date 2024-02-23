@@ -8,9 +8,9 @@ function IndexPage(props) {
     <Layout>
       <div>
         <ul>
-          <li><Link to="/user-guide/5.9/">User Guide</Link></li>
-          <li><Link to="/admin-guide/5.9/">Admin Guide</Link></li>
-          <li><Link to="/api-guide/5.9/">API Guide</Link></li>
+          <li><Link to="/5.9/user-guide/">User Guide</Link></li>
+          <li><Link to="/5.9/admin-guide/">Admin Guide</Link></li>
+          <li><Link to="/5.9/api-guide/">API Guide</Link></li>
         </ul>
       </div>
     </Layout>
