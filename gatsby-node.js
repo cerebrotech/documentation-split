@@ -1,8 +1,68 @@
 const _ = require(`lodash`)
+const fs = require(`fs`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 const fetchVersions = require('./src/util/get-versions');
+const readYaml = require('./src/util/read-yaml');
+const getVersion = require('./src/util/get-version');
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
+  const typeDefs = `
+    type SiteStructure implements Node @dontInfer {
+      id: ID!
+      version: String!
+      structure: JSON!
+    }
+
+    type allSiteStructure implements Node @dontInfer {
+      version: String!
+      structure: JSON!
+    }
+  `;
+  createTypes(typeDefs);
+};
+
+
+exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => {
+  const { createNode } = actions;
+
+  // Define the path to the content folder
+  const contentDirectory = path.resolve('./content');
+
+  // Function to read all structure.yml files from a given directory
+  const readYAMLFiles = (dir) => {
+    const files = fs.readdirSync(dir);
+    files.forEach((file) => {
+      const filePath = path.join(dir, file);
+      const stat = fs.statSync(filePath);
+
+      if (stat && stat.isDirectory()) {
+        readYAMLFiles(filePath); // Recursively read from subdirectories.
+      } else if (file === 'structure.yml') {
+        const data = readYaml(filePath);
+
+        const version = getVersion(filePath.replace(/\/site\/content/g, ""));
+
+        createNode({
+          ...data,
+          id: createNodeId(`structure-${filePath}`),
+          parent: null,
+          version: version,
+          children: [],
+          internal: {
+            type: 'SiteStructure',
+            content: JSON.stringify(data),
+            contentDigest: createContentDigest(data),
+          },
+        })
+      };
+    })
+  };
+
+  readYAMLFiles(contentDirectory);
+};
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
@@ -17,6 +77,7 @@ exports.createPages = async ({ graphql, actions }) => {
             id
             fields {
               slug
+              version
             }
           }
         }
@@ -35,6 +96,7 @@ exports.createPages = async ({ graphql, actions }) => {
         context: {
           id: node.id,
           versions,
+          version: node.fields.version,
         },
       })
     })
@@ -54,7 +116,6 @@ exports.onCreateNode = async ({ node, actions, getNode, loadNodeContent }) => {
   const { createNodeField } = actions
 
   if (node.internal.type === `Asciidoc`) {
-
     const slug = createFilePath({ node, getNode })
 
     const parts = slug.replace(/^\/|\/$/g, '').split('/');

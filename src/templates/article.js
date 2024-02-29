@@ -3,6 +3,7 @@ import { graphql } from "gatsby"
 import { FaGithub } from "react-icons/fa";
 
 import Layout from "../layouts"
+import getCategory from "../util/get-category";
 
 export const Head = ({ location, data }) => (
   <>
@@ -12,7 +13,13 @@ export const Head = ({ location, data }) => (
 
 class Article extends React.Component {
   render() {
+    const { id, versions, version } = this.props.pageContext;
     const editUrl = `${this.props.data.site.siteMetadata.contentRepositoryUrl}${this.props.data.asciidoc.fields.path}`;
+
+    const category = getCategory(this.props.data.asciidoc.fields.path);
+
+    const structure = JSON.parse(this.props.data.siteStructure.internal.content)[category];
+
     return (
       <Layout>
         <div id="edit-link">
@@ -21,6 +28,12 @@ class Article extends React.Component {
           </a>
         </div>
         <div dangerouslySetInnerHTML={{ __html: this.props.data.asciidoc.html }} />
+        <div>
+          {getCategory(this.props.data.asciidoc.fields.path)}
+        </div>
+        <div>
+          {JSON.stringify(structure)}
+        </div>
       </Layout>
     )
   }
@@ -29,7 +42,7 @@ class Article extends React.Component {
 export default Article
 
 export const pageQuery = graphql`
-  query($id: String!) {
+  query($id: String!, $version: String!) {
     site {
       siteMetadata {
         contentRepositoryUrl
@@ -44,6 +57,14 @@ export const pageQuery = graphql`
       }
       fields {
         path
+      }
+    }
+    siteStructure(version: {eq: $version}) {
+      id
+      version
+      internal {
+        content
+        contentDigest
       }
     }
   }
