@@ -31,7 +31,7 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => 
   // Define the path to the content folder
   const contentDirectory = path.resolve('./content');
 
-  // Function to read all structure.yml files from a given directory
+  // Read all structure.yml files from a directory.
   const readYAMLFiles = (dir) => {
     const files = fs.readdirSync(dir);
     files.forEach((file) => {

@@ -4,6 +4,7 @@ import { FaGithub } from "react-icons/fa";
 
 import Layout from "../layouts"
 import getCategory from "../util/get-category";
+import NestedList from "../components/nested-list";
 
 export const Head = ({ location, data }) => (
   <>
@@ -28,11 +29,8 @@ class Article extends React.Component {
           </a>
         </div>
         <div dangerouslySetInnerHTML={{ __html: this.props.data.asciidoc.html }} />
-        <div>
-          {getCategory(this.props.data.asciidoc.fields.path)}
-        </div>
-        <div>
-          {JSON.stringify(structure)}
+        <div className="bg-rose-400">
+          <NestedList content={structure.content} />
         </div>
       </Layout>
     )
