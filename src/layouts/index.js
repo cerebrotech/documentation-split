@@ -53,7 +53,7 @@ const DefaultLayout = ({ children }) => {
         const versions = Array.from(new Set(data.allAsciidoc.nodes.map(node => parseFloat(node.fields.version)))).sort((a, b) => b - a);
         const selectedVersion = version ? version : Math.max(...versions);
 
-        const structure = data.allSiteStructure.nodes.find(node => node.version === selectedVersion).structure;
+        const structure = data.allSiteStructure.nodes.find(node => node.version === selectedVersion);
 
         return (
           <div className="prose lg:prose-lg my-0 max-w-full">
@@ -76,19 +76,25 @@ const DefaultLayout = ({ children }) => {
                   <a href={`/${selectedVersion}/api-guide/`}><FaCode size={24} className="inline" /> API Guide</a>
                 </li>
               </ul>
-                {!isLandingPage() && (
-                <div>
-                  <label htmlFor="version-selector">Select Version:</label>
-                  <select id="version-selector" value={selectedVersion} onChange={handleChange}>
-                    {versions.map((version, index) => (
-                      <option key={index} value={version}>{version}</option>
-                    ))}
-                  </select>
-                </div>
-                )}
-                <div>
-                  <NestedList content={JSON.parse(structure)[category].content} />
-                </div>
+                {
+                  !isLandingPage() && (
+                  <div>
+                    <label htmlFor="version-selector">Select Version:</label>
+                    <select id="version-selector" value={selectedVersion} onChange={handleChange}>
+                      {versions.map((version, index) => (
+                        <option key={index} value={version}>{version}</option>
+                      ))}
+                    </select>
+                  </div>
+                  )
+                }
+                {
+                  structure && (
+                  <div>
+                    <NestedList content={JSON.parse(structure.structure)[category].content} />
+                  </div>
+                  )
+                }
               </div>
               <div className="flex-1" style={{ flex: '0 0 80%' }}>
                 <div className="pt-6 pl-4 pr-2 max-w-3xl">
