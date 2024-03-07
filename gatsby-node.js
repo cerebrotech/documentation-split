@@ -15,15 +15,9 @@ exports.createSchemaCustomization = ({ actions }) => {
       version: String!
       structure: JSON!
     }
-
-    type allSiteStructure implements Node @dontInfer {
-      version: String!
-      structure: JSON!
-    }
   `;
   createTypes(typeDefs);
 };
-
 
 exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => {
   const { createNode } = actions;
@@ -45,7 +39,7 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => 
 
         const version = getVersion(filePath.replace(/\/site\/content/g, ""));
 
-        createNode({
+        const yamlNode = {
           ...data,
           id: createNodeId(`structure-${filePath}`),
           parent: null,
@@ -53,10 +47,12 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => 
           children: [],
           internal: {
             type: 'SiteStructure',
-            content: JSON.stringify(data),
             contentDigest: createContentDigest(data),
           },
-        })
+          structure: JSON.stringify(data),
+        };
+        yamlNode.internal.contentDigest = createContentDigest(yamlNode);
+        createNode(yamlNode);
       };
     })
   };

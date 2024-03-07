@@ -4,10 +4,13 @@ import { FaHome, FaBook, FaCog, FaCode } from "react-icons/fa";
 import { useLocation } from "../util/location";
 import setVersion from "../util/set-version";
 import getVersion from "../util/get-version";
+import getCategory from "../util/get-category";
+import NestedList from "../components/nested-list";
 
 const DefaultLayout = ({ children }) => {
   const location = useLocation();
   const version = getVersion(location.pathname);
+  const category = getCategory(location.pathname);
 
   const [, setSelectedOption] = useState("");
 
@@ -38,11 +41,20 @@ const DefaultLayout = ({ children }) => {
               }
             }
           }
+          allSiteStructure {
+            nodes {
+              version
+              structure
+            }  
+          }
         }
       `}
       render={(data) => {
         const versions = Array.from(new Set(data.allAsciidoc.nodes.map(node => parseFloat(node.fields.version)))).sort((a, b) => b - a);
         const selectedVersion = version ? version : Math.max(...versions);
+
+        const structure = data.allSiteStructure.nodes.find(node => node.version === selectedVersion).structure;
+
         return (
           <div className="prose lg:prose-lg my-0 max-w-full">
             <div className="p-3 text-center bg-black">
@@ -74,6 +86,9 @@ const DefaultLayout = ({ children }) => {
                   </select>
                 </div>
                 )}
+                <div>
+                  <NestedList content={JSON.parse(structure)[category].content} />
+                </div>
               </div>
               <div className="flex-1" style={{ flex: '0 0 80%' }}>
                 <div className="pt-6 pl-4 pr-2 max-w-3xl">

@@ -19,8 +19,6 @@ class Article extends React.Component {
 
     const category = getCategory(this.props.data.asciidoc.fields.path);
 
-    const structure = JSON.parse(this.props.data.siteStructure.internal.content)[category];
-
     return (
       <Layout>
         <div id="edit-link">
@@ -29,9 +27,6 @@ class Article extends React.Component {
           </a>
         </div>
         <div dangerouslySetInnerHTML={{ __html: this.props.data.asciidoc.html }} />
-        <div className="bg-rose-400">
-          <NestedList content={structure.content} />
-        </div>
       </Layout>
     )
   }
