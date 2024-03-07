@@ -37,8 +37,9 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => 
       } else if (file === 'structure.yml') {
         const data = readYaml(filePath);
 
-        const version = getVersion(filePath.replace(/\/site\/content/g, ""));
+        const version = getVersion(filePath);
 
+        console.log("Create YAML node.")
         const yamlNode = {
           ...data,
           id: createNodeId(`structure-${filePath}`),

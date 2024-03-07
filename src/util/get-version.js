@@ -6,7 +6,7 @@
 // and extracts the version number.
 //
 const getVersion = (path) => {
-    const match = /^\/?([^/]+)\/.*$/.exec(path);
+    const match = /^\/?([^/]+)\/.*$/.exec(path.replace(/.*\/content/, "") );
     return match ? match[1] : null;
 }
   
