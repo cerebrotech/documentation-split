@@ -8,7 +8,7 @@ info:
     github:
       repository: cerebrotech/documentation-split
   x-cortex-owners:
-  - name: cse
+  - name: cx-docs
     type: group
     provider: OKTA
     description: Updated by eng-devprod
