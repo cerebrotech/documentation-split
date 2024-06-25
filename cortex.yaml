@@ -1,0 +1,15 @@
+openapi: 3.0.1
+info:
+  title: documentation-split
+  description: Cortex descriptor created automatically by eng-devprod
+  x-cortex-tag: documentation-split
+  x-cortex-type: service
+  x-cortex-git:
+    github:
+      repository: cerebrotech/documentation-split
+  x-cortex-owners:
+  - name: cse
+    type: group
+    provider: OKTA
+    description: Updated by eng-devprod
+
